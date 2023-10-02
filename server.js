@@ -18,6 +18,10 @@ async function connectToDatabase(){
 }
 connectToDatabase()
 
+app.get('/', (req, res) => {
+    res.send("4rivappa backend")
+})
+
 app.use("/profile", profileRouter);
 
 app.listen(4068)

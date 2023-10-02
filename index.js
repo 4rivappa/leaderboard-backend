@@ -1,6 +1,6 @@
 const express = require("express")
-const profileRouter = require("../routes/profile");
-const connectToMongoDB = require("../controllers/dbConnection");
+const profileRouter = require("./routes/profile");
+const connectToMongoDB = require("./controllers/dbConnection");
 const cors = require("cors");
 
 const app = express()
@@ -21,11 +21,9 @@ connectToDatabase()
 app.get('/favicon.ico', (req, res) => res.status(204));
 
 app.get('/', (req, res) => {
-    res.send("4rivappa backend")
+    res.send("API Home")
 })
 
 app.use("/profile", profileRouter);
 
 app.listen(4068)
-
-module.exports = app;

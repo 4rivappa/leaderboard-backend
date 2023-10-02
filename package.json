@@ -3,9 +3,12 @@
   "version": "1.0.0",
   "description": "backend for leaderboard of monkeytype",
   "main": "server.js",
+  "engines": {
+    "node": "18.x"
+  },
   "scripts": {
-    "start": "node ./api/index.js",
-    "devStart": "nodemon server.js"
+    "start": "node index.js",
+    "devStart": "nodemon index.js"
   },
   "author": "",
   "license": "ISC",

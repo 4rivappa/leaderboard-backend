@@ -28,7 +28,7 @@ router.get("/:username", async (req, res) => {
 
 router.param("username", async (req, res, next, username) => {
     try {
-        const response = await axios.get(`https://api.monkeytype.com/users/${username}/profile`);
+        const response = await axios.get(`http://api.monkeytype.com/users/${username}/profile`);
 
         if (response.status === 200) {
             const userData = response.data;
@@ -45,7 +45,7 @@ router.param("username", async (req, res, next, username) => {
         }
     } catch (error) {
         console.error(error);
-        res.status(500).send("Internal Server Error");
+        res.status(500).send({message: "Internal Server Error", error: error});
     }
 })
  

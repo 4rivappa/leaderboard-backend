@@ -3,6 +3,7 @@ const axios = require("axios")
 const LeaderboardFifteen = require("../model/leaderboardFifteen")
 const LeaderboardSixty = require("../model/leaderboardSixty")
 const router = express.Router()
+// const https = require('https');
 
 router.get("/:username", async (req, res) => {
     try {
@@ -29,6 +30,23 @@ router.get("/:username", async (req, res) => {
 router.param("username", async (req, res, next, username) => {
     try {
         const response = await axios.get(`http://api.monkeytype.com/users/${username}/profile`);
+        // const response = await fetch(`http://api.monkeytype.com/users/${username}/profile`, {
+        //     method: 'GET',
+        // })
+        
+        // https.get(`http://api.monkeytype.com/users/${username}/profile`, res => {
+        //     let data = '';
+        //     res.on('data', chunk => {
+        //         data += chunk;
+        //     });
+        //     res.on('end', () => {
+        //         // res.data = JSON.parse(data);
+        //         console.log(data);
+        //     })
+        //     }).on('error', err => {
+        //     console.log(err.message);
+        // })
+          
 
         if (response.status === 200) {
             const userData = response.data;

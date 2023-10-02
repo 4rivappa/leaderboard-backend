@@ -18,6 +18,8 @@ async function connectToDatabase(){
 }
 connectToDatabase()
 
+app.get('/favicon.ico', (req, res) => res.status(204));
+
 app.get('/', (req, res) => {
     res.send("4rivappa backend")
 })

@@ -27,3 +27,5 @@ app.get('/', (req, res) => {
 app.use("/profile", profileRouter);
 
 app.listen(4068)
+
+module.exports = app;

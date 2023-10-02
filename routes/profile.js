@@ -29,7 +29,13 @@ router.get("/:username", async (req, res) => {
 
 router.param("username", async (req, res, next, username) => {
     try {
-        const response = await axios.get(`http://api.monkeytype.com/users/${username}/profile`);
+        const axiosConfig = {
+            headers:{
+                'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36'
+            }
+        }
+
+        const response = await axios.get(`https://api.monkeytype.com/users/${username}/profile`, axiosConfig);
         // const response = await fetch(`http://api.monkeytype.com/users/${username}/profile`, {
         //     method: 'GET',
         // })

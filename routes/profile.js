@@ -29,30 +29,12 @@ router.get("/:username", async (req, res) => {
 
 router.param("username", async (req, res, next, username) => {
     try {
-        const axiosConfig = {
-            headers:{
-                'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36'
-            }
-        }
-
-        const response = await axios.get(`https://api.monkeytype.com/users/${username}/profile`, axiosConfig);
-        // const response = await fetch(`http://api.monkeytype.com/users/${username}/profile`, {
-        //     method: 'GET',
-        // })
-        
-        // https.get(`http://api.monkeytype.com/users/${username}/profile`, res => {
-        //     let data = '';
-        //     res.on('data', chunk => {
-        //         data += chunk;
-        //     });
-        //     res.on('end', () => {
-        //         // res.data = JSON.parse(data);
-        //         console.log(data);
-        //     })
-        //     }).on('error', err => {
-        //     console.log(err.message);
-        // })
-          
+        const API_KEY = process.env.MONKEYTYPE_APEKEY;
+        const response = await axios.get(`https://api.monkeytype.com/users/${username}/profile`, {
+            headers: {
+                Authorization: `ApeKey ${API_KEY}`,
+            },
+        });
 
         if (response.status === 200) {
             const userData = response.data;

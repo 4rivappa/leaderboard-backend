@@ -32,7 +32,8 @@ router.param("username", async (req, res, next, username) => {
         const API_KEY = process.env.MONKEYTYPE_APEKEY;
         const response = await axios.get(`https://api.monkeytype.com/users/${username}/profile`, {
             headers: {
-                Authorization: `ApeKey ${API_KEY}`,
+                'Authorization': `ApeKey ${API_KEY}`,
+                'Accept-Encoding': 'gzip, deflate, br'
             },
         });
 
@@ -50,7 +51,7 @@ router.param("username", async (req, res, next, username) => {
             res.status(response.status).send("Error fetching user data");
         }
     } catch (error) {
-        console.error(error);
+        // console.error(error);
         res.status(500).send({message: "Internal Server Error", error: error});
     }
 })

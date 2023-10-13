@@ -3,7 +3,15 @@ const axios = require("axios")
 const LeaderboardFifteen = require("../model/leaderboardFifteen")
 const LeaderboardSixty = require("../model/leaderboardSixty")
 const router = express.Router()
-// const https = require('https');
+
+let fetch;
+import("node-fetch")
+    .then((module) => {
+        fetch = module.default;
+    })
+    .catch((err) => {
+        console.error("Error while importing node-fetch:", err);
+    });
 
 router.get("/:username", async (req, res) => {
     try {
@@ -20,7 +28,7 @@ router.get("/:username", async (req, res) => {
             return { wpm: obj.wpm, raw: obj.raw, acc: obj.acc, con: obj.con, ts: obj.ts, r: obj.r };
         });
 
-        res.json({message: "success", body:{name: req.name, avatar: req.avatar, dId: req.dId, allTimeLbs: req.allTimeLbs, fifteen: returnFifteen, sixty: returnSixty }});
+        res.json({message: "success", body:{ fifteen: returnFifteen, sixty: returnSixty }});
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'error', error: 'An error occurred while fetching leaderboard' });
@@ -28,32 +36,8 @@ router.get("/:username", async (req, res) => {
 })
 
 router.param("username", async (req, res, next, username) => {
-    try {
-        const API_KEY = process.env.MONKEYTYPE_APEKEY;
-        const response = await axios.get(`https://api.monkeytype.com/users/${username}/profile`, {
-            headers: {
-                Authorization: `ApeKey ${API_KEY}`,
-                'Accept-Encoding': 'gzip, deflate, br'
-            },
-        });
-
-        if (response.status === 200) {
-            const userData = response.data;
-            const user_id = userData.data.uid;
-
-            req.user_id = user_id;
-            req.name = userData.data.name;
-            req.avatar = userData.data.discordAvatar;
-            req.dId = userData.data.discordId;
-            req.allTimeLbs = userData.data.allTimeLbs;
-            next();
-        } else {
-            res.status(response.status).send("Error fetching user data");
-        }
-    } catch (error) {
-        // console.error(error);
-        res.status(500).send({message: "Internal Server Error", error: error});
-    }
+    req.user_id = username;
+    next();
 })
  
 module.exports = router
